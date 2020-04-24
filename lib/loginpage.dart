@@ -1,6 +1,6 @@
+import 'package:flashlabs/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
-import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -11,10 +11,11 @@ class _LoginScreenState extends State<LoginScreen>{
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      body: Stack(children: <Widget>[
+      body: Stack(
+        children: <Widget>[
         Container(
-          height: double.infinity,
-          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: Color.fromRGBO(51, 83, 241, 1),
           )
@@ -33,8 +34,8 @@ class _LoginScreenState extends State<LoginScreen>{
                 ),
                 SizedBox(height: 45),
                 ClayContainer(
-                  spread: 15,
-                  depth: 30,
+                  spread: 2,
+                  depth: 40,
                   curveType: CurveType.convex,
                   height: 300.0,
                   width: 300.0,
@@ -81,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen>{
                           color: Color.fromRGBO(51, 82, 241, 1),
                           borderRadius: 30.0,
                           spread: 1,
-                          depth: 45,
+                          depth: 100,
                           child: TextField(
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
@@ -92,6 +93,9 @@ class _LoginScreenState extends State<LoginScreen>{
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 14.0),
                               hintText: 'Email',
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                                ),
                             ),
                           )
                         )
@@ -120,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen>{
                           color: Color.fromRGBO(51, 82, 241, 1),
                           borderRadius: 30.0,
                           spread: 1,
-                          depth: 45,
+                          depth: 100,
                           child: TextField(
                            obscureText: true,
                             style: TextStyle(
@@ -131,6 +135,9 @@ class _LoginScreenState extends State<LoginScreen>{
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 14.0),
                               hintText: 'Password',
+                              hintStyle: TextStyle(
+                                color: Colors.grey[200],
+                                ),
                             ),
                           )
                         )
@@ -139,29 +146,44 @@ class _LoginScreenState extends State<LoginScreen>{
                   ),
                 ),
                 SizedBox(height: 100),
-                ClayContainer(
-                  height:50,
-                  width: 150,
-                  spread: 2,
-                  depth: 50,
-                  color: Color.fromRGBO(51, 82, 241, 1),
-                  borderRadius: 30,
-                  child: Center(
-                    child: Text('Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    )
-                    ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return Dashboard();
+                      }
+                       )
+                      );
+                  },
+                  child: ClayContainer(
+                    height:50,
+                    width: 150,
+                    spread: 2,
+                    depth: 50,
+                    color: Color.fromRGBO(51, 82, 241, 1),
+                    borderRadius: 30,
+                    child: Center(
+                      child: Text('Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                     )
+                   ),
+                  ),
                 ),
                 SizedBox(height: 100),
               ],
-              )
+            )
           ),
         ),
-      ]),
+       ]
+      ),
     );
   }
 }
+
+
+//TODO: ADD FIREBASE AUTH FOR LOGIN FOR BACKEND
+//TODO: ADD ERROR DIALOG IF LOGIN FAILS
