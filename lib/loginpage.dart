@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen>{
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(51, 83, 241, 1),
+            color: Color.fromRGBO(242, 242, 242, 1),
           )
         ),
         Container(
@@ -34,12 +34,12 @@ class _LoginScreenState extends State<LoginScreen>{
                 ),
                 SizedBox(height: 45),
                 ClayContainer(
-                  spread: 2,
-                  depth: 40,
+                  // spread: 2,
+                  // depth: 40,
                   curveType: CurveType.convex,
                   height: 300.0,
                   width: 300.0,
-                  color: Color.fromRGBO(51, 82, 241, 1),
+                  color: Color.fromRGBO(242, 242, 242, 1),
                   borderRadius: 20,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen>{
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
                             ),
                           ),
                       ),
@@ -67,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen>{
                             'Please enter your email',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                       ),
@@ -79,23 +77,19 @@ class _LoginScreenState extends State<LoginScreen>{
                         child: ClayContainer(
                           height: 50,
                           width: 250,
-                          color: Color.fromRGBO(51, 82, 241, 1),
+                          color: Color.fromRGBO(242, 242, 242, 1),
                           borderRadius: 30.0,
                           spread: 1,
                           depth: 100,
                           child: TextField(
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
-                              color: Colors.white,
                               fontFamily: 'OpenSans',
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 14.0),
                               hintText: 'Email',
-                              hintStyle: TextStyle(
-                                color: Colors.grey[200],
-                                ),
                             ),
                           )
                         )
@@ -109,7 +103,6 @@ class _LoginScreenState extends State<LoginScreen>{
                             'Please enter your password',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                       ),
@@ -121,23 +114,20 @@ class _LoginScreenState extends State<LoginScreen>{
                         child: ClayContainer(
                           height: 50,
                           width: 250,
-                          color: Color.fromRGBO(51, 82, 241, 1),
+                          color: Color.fromRGBO(242, 242, 242, 1),
                           borderRadius: 30.0,
                           spread: 1,
                           depth: 100,
                           child: TextField(
                            obscureText: true,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black38,
                               fontFamily: 'OpenSans',
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 14.0),
                               hintText: 'Password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey[200],
-                                ),
                             ),
                           )
                         )
@@ -160,12 +150,11 @@ class _LoginScreenState extends State<LoginScreen>{
                     width: 150,
                     spread: 2,
                     depth: 50,
-                    color: Color.fromRGBO(51, 82, 241, 1),
+                    color: Color.fromRGBO(242, 242, 242, 1),
                     borderRadius: 30,
                     child: Center(
                       child: Text('Login',
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),

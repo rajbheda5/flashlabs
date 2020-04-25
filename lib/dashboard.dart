@@ -1,4 +1,4 @@
-import 'package:flashlabs/loginpage.dart';
+import 'package:flashlabs/update.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 
@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard>{
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-            color: Color.fromRGBO(51, 83, 241, 1),
+            color: Color.fromRGBO(242, 242, 242, 1),
           )
           ),
           Container(
@@ -42,39 +42,47 @@ class _DashboardState extends State<Dashboard>{
                     Text(userName, 
                       style: TextStyle(
                         fontSize: 36,
-                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(userInfo,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.white,
                       ),
                     ),
                     SizedBox(height: 56),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ClayContainer(
-                          height: 150,
-                          width: 150,
-                          color: Color.fromRGBO(51, 83, 241, 1),
-                          spread: 2,
-                          depth: 100,
-                          child: Icon(Icons.edit,color: Colors.white,
-                          size: 75,
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return UpdateScreen();
+                              }
+                            )
+                            );
+                          },
+                          child: ClayContainer(
+                            height: 150,
+                            width: 150,
+                            color: Color.fromRGBO(242, 242, 242, 1),
+                            // spread: 2,
+                            // depth: 100,
+                            child: Icon(Icons.edit,
+                            size: 75,
+                            ),
+                            borderRadius: 25,
                           ),
-                          borderRadius: 25,
                         ),
                         SizedBox(width: 55),
                         ClayContainer(
                           height: 150,
                           width: 150,
-                          color: Color.fromRGBO(51, 83, 241, 1),
-                          spread: 2,
-                          depth: 100,
-                          child: Icon(Icons.event_note ,color: Colors.white,
+                          color: Color.fromRGBO(242, 242, 242, 1),
+                          // spread: 2,
+                          // depth: 100,
+                          child: Icon(Icons.event_note ,
                           size: 75,
                           ),
                           borderRadius: 25,
@@ -84,24 +92,18 @@ class _DashboardState extends State<Dashboard>{
                          SizedBox(height: 100),
                           InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context){
-                              return LoginScreen();
-                            }
-                            )
-                            );
+                          Navigator.pop(context);
                         },
                         child: ClayContainer(
                           height:50,
                           width: 150,
                           spread: 2,
                           depth: 50,
-                          color: Color.fromRGBO(51, 82, 241, 1),
+                          color: Color.fromRGBO(242, 242, 242, 1),
                           borderRadius: 30,
                           child: Center(
                             child: Text('Logout',
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
