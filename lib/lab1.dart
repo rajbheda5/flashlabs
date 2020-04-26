@@ -21,6 +21,33 @@ class _LabOne extends State<Lab1>{
    Color button4Color=Color.fromRGBO(24, 26, 30, 1);
    Color button5Color=Color.fromRGBO(24, 26, 30, 1);
 
+   Future<String> createAlertDialog(BuildContext context){
+
+     TextEditingController customController = TextEditingController();
+
+     return showDialog(context: context, builder: (context){
+       return AlertDialog(
+         title: Text('Remarks'),
+         content: TextField(
+           controller: customController,
+         ),
+         actions: <Widget>[
+           MaterialButton(
+             elevation: 5.0,
+             child: Text('Submit'),
+             onPressed: (){
+               Navigator.of(context).pop(customController.text.toString());
+               
+             },
+             )
+         ],
+       );
+     }
+     );
+   }
+
+  
+
   @override 
   Widget build(BuildContext context){
     return Scaffold(
@@ -101,29 +128,35 @@ class _LabOne extends State<Lab1>{
                     child: Lab1Equipment(eq1name: 'Trainer Kit',colour: button5Color),
                   ),
                   SizedBox(height: 70),
-                  ClayContainer(
-                    height: 80,
-                    width: 200,
-                    borderRadius: 18,
-                    color: Color.fromRGBO(242, 62, 16, 1),
-                    spread: 3,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.feedback,
-                          color: Colors.white,
-                          size: 35,
-                          ),
-                          SizedBox(width: 15),
-                          Text('Add Remarks',
-                          style: TextStyle(
+                  InkWell(
+                    onTap: (){
+                      createAlertDialog(context).then((onValue){}
+                      );                   
+                    },
+                    child: ClayContainer(
+                      height: 80,
+                      width: 200,
+                      borderRadius: 18,
+                      color: Color.fromRGBO(242, 62, 16, 1),
+                      spread: 3,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.feedback,
                             color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          )
-                        ],
+                            size: 35,
+                            ),
+                            SizedBox(width: 15),
+                            Text('Add Remarks',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

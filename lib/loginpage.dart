@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen>{
                               hintText: 'Password',
                               hintStyle: TextStyle(
                                 color: Colors.grey,
-                              )
+                              ),
                             ),
                           )
                         )

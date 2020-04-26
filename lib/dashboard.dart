@@ -31,7 +31,7 @@ class _DashboardState extends State<Dashboard>{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height:75, width: double.infinity,),
+                    SizedBox(height:75, width: double.infinity),
                     Container(                     
                       child: CircleAvatar(
                         backgroundImage: AssetImage('assets/Animoji.png'),
@@ -128,5 +128,4 @@ class _DashboardState extends State<Dashboard>{
       )
     );
   }
-  
 }
