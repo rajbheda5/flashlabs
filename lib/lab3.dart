@@ -7,18 +7,37 @@ class Lab3 extends StatefulWidget{
 
 class _LabThree extends State<Lab3>{
   @override 
-  Widget build(BuildContext context){
+   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(242, 242, 242, 1),
-        leading: BackButton(
-          color: Colors.black,
-        ),
+        backgroundColor: Color.fromRGBO(24, 26, 30, 1),
+        leading: BackButton(),
         title: Text('Lab 3', 
           style:TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
           ),
+      ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromRGBO(24, 26, 30, 1),
+          ),
+          Container(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  
+                ],
+              ),
+            )
+          )
+        ],
       ),
     );
   }

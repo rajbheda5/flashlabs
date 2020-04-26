@@ -14,13 +14,11 @@ class _UpdateState extends State<UpdateScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(242, 242, 242, 1),
-        leading: BackButton(
-          color: Colors.black,
-        ),
+        backgroundColor: Color.fromRGBO(24, 26, 30, 1),
+        leading: BackButton(),
         title: Text('Select Lab', 
           style:TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
           ),
       ),
@@ -29,7 +27,7 @@ class _UpdateState extends State<UpdateScreen>{
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(242, 242, 242, 1),
+            color: Color.fromRGBO(24, 26, 30, 1),
           ),
           Container(
             height: double.infinity,

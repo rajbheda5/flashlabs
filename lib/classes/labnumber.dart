@@ -10,12 +10,12 @@ class LabNumber extends StatelessWidget {
     return ClayContainer(
       height: 150,
       width: 150,
-      color: Color.fromRGBO(242, 242, 242, 1),
+      color: Color.fromRGBO(24, 26, 30, 1),
       borderRadius: 25,
       child: Center(
         child: Text('Lab\n  $number',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 36,
             fontWeight: FontWeight.bold,
           ),

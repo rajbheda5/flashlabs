@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard>{
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-            color: Color.fromRGBO(242, 242, 242, 1),
+            color: Color.fromRGBO(24, 26, 30, 1),
           )
           ),
           Container(
@@ -42,12 +42,15 @@ class _DashboardState extends State<Dashboard>{
                     Text(userName, 
                       style: TextStyle(
                         fontSize: 36,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(userInfo,
                       style: TextStyle(
+                        color: Colors.white,
                         fontSize: 14,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
                     SizedBox(height: 56),
@@ -55,6 +58,7 @@ class _DashboardState extends State<Dashboard>{
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         InkWell(
+                          //splashColor: Color.fromRGBO(242, 62, 16, 0.8),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context){
@@ -66,11 +70,12 @@ class _DashboardState extends State<Dashboard>{
                           child: ClayContainer(
                             height: 150,
                             width: 150,
-                            color: Color.fromRGBO(242, 242, 242, 1),
+                            color: Color.fromRGBO(24, 26, 30, 1),
                             // spread: 2,
                             // depth: 100,
                             child: Icon(Icons.edit,
                             size: 75,
+                            color: Colors.white,
                             ),
                             borderRadius: 25,
                           ),
@@ -79,11 +84,12 @@ class _DashboardState extends State<Dashboard>{
                         ClayContainer(
                           height: 150,
                           width: 150,
-                          color: Color.fromRGBO(242, 242, 242, 1),
+                          color: Color.fromRGBO(24, 26, 30, 1),
                           // spread: 2,
                           // depth: 100,
                           child: Icon(Icons.event_note ,
                           size: 75,
+                          color: Colors.white,
                           ),
                           borderRadius: 25,
                         )
@@ -99,12 +105,13 @@ class _DashboardState extends State<Dashboard>{
                           width: 150,
                           spread: 2,
                           depth: 50,
-                          color: Color.fromRGBO(242, 242, 242, 1),
+                          color: Color.fromRGBO(242, 62, 16, 1),
                           borderRadius: 30,
                           child: Center(
                             child: Text('Logout',
                             style: TextStyle(
                               fontSize: 18,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           )
