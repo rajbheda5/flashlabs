@@ -1,5 +1,5 @@
 import 'package:flashlabs/screens/reportscreen.dart';
-import 'package:flashlabs/screens/update.dart';
+import 'package:flashlabs/update.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 

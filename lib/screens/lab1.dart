@@ -1,4 +1,5 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flashlabs/classes/lab1equipment.dart';
 
@@ -7,7 +8,7 @@ class Lab1 extends StatefulWidget {
   _LabOne createState() => _LabOne();
 }
 
-class _LabOne extends State<Lab1> with SingleTickerProviderStateMixin {
+class _LabOne extends State<Lab1> {
   bool isClicked1 = false;
   bool isClicked2 = false;
   bool isClicked3 = false;
@@ -38,31 +39,19 @@ class _LabOne extends State<Lab1> with SingleTickerProviderStateMixin {
                 child: Text('Submit'),
                 onPressed: () {
                   Navigator.of(context).pop(customController.text.toString());
-                  showInSnackBar("Submitted Successfully");
+                  Flushbar(
+                    message: 'Submitted Successfully!',
+                    duration: Duration(seconds: 1),
+                    margin: EdgeInsets.all(8),
+                    borderRadius: 8,
+                    backgroundColor: Color.fromRGBO(24, 26, 30, 1),
+                    icon: Icon(Icons.check),
+                  )..show(context);
                 },
               )
             ],
           );
         });
-  }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-  void showInSnackBar(String value) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    _scaffoldKey.currentState?.removeCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(
-        value,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
-      ),
-      backgroundColor: Color.fromRGBO(24, 26, 30, 1),
-      duration: Duration(seconds: 3),
-    ));
   }
 
   @override
