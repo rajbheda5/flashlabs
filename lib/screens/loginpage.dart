@@ -1,4 +1,4 @@
-import 'package:flashlabs/dashboard.dart';
+import 'package:flashlabs/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
