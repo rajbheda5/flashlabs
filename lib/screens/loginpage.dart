@@ -1,6 +1,7 @@
 import 'package:flashlabs/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -8,6 +9,14 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreenState extends State<LoginScreen>{
+  bool _obscureTextLogin = true;
+
+ void _toggleLogin() {
+    setState(() {
+      _obscureTextLogin = !_obscureTextLogin;
+    });
+  }
+
   @override 
   Widget build(BuildContext context){
     return Scaffold(
@@ -126,11 +135,11 @@ class _LoginScreenState extends State<LoginScreen>{
                           spread: 1,
                           depth: 100,
                           child: TextField(
-                           obscureText: true,
+                            textAlignVertical: TextAlignVertical.center,
+                           obscureText: _obscureTextLogin,
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'OpenSans',
-
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -139,6 +148,16 @@ class _LoginScreenState extends State<LoginScreen>{
                               hintStyle: TextStyle(
                                 color: Colors.grey,
                               ),
+                              suffixIcon: GestureDetector(
+                              onTap: _toggleLogin,
+                              child: Icon(
+                                _obscureTextLogin
+                                    ? FontAwesomeIcons.eye
+                                    : FontAwesomeIcons.eyeSlash,
+                                size: 15.0,
+                                color: Colors.grey,
+                              ),
+                            ),
                             ),
                           )
                         )
