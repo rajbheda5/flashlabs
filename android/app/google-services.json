@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "611560359183",
+    "firebase_url": "https://flashlab-aefe3.firebaseio.com",
+    "project_id": "flashlab-aefe3",
+    "storage_bucket": "flashlab-aefe3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611560359183:android:05812ad67471da3bf42a7a",
+        "android_client_info": {
+          "package_name": "com.example.flashlabs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611560359183-pprd6s59km2rgi2ceiuo35nigk8dcpb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0q9TB7_rHuGCCtzPP41rmzcfV0bmAtx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611560359183-pprd6s59km2rgi2ceiuo35nigk8dcpb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

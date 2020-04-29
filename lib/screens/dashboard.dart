@@ -1,17 +1,58 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashlabs/screens/reportscreen.dart';
 import 'package:flashlabs/screens/update.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
+
 }
 
 class _DashboardState extends State<Dashboard> {
-  String userName = "Dr. Charles Lee";
-  String userInfo = "Professor, IT Department";
+
+  String userName ='null' ,userInfo='null' ;
   //Here, for UI, I've initialised the strings but the value of string will actually the one fetched from firestore
+
+void Get_user_info()async
+  {
+    try
+    {
+      FirebaseUser getuser = await FirebaseAuth.instance.currentUser();
+      var userdetail = await Firestore.instance.collection('users').document(
+          '${getuser.email}').get();
+
+       userName = await userdetail.data['name'];
+       userInfo = await userdetail.data['deg'];
+    }
+    catch(e)
+    {
+      print(e);
+    }
+
+  }
+
+
+@override
+  void initState(){
+    try{
+
+      Get_user_info();
+
+    }catch(e)
+    {
+      print(e);
+}
+
+  print('jeet');
+  print(userInfo);
+  super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +148,7 @@ class _DashboardState extends State<Dashboard> {
                   SizedBox(height: 100),
                   InkWell(
                     onTap: () {
-                      Navigator.pop(context);
+                     Navigator.pop(context);
                     },
                     child: ClayContainer(
                       height: 50,

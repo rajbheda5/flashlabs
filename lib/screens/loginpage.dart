@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flashlabs/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -10,6 +12,7 @@ class LoginScreen extends StatefulWidget{
 
 class _LoginScreenState extends State<LoginScreen>{
   bool _obscureTextLogin = true;
+  String _email,_password;
 
  void _toggleLogin() {
     setState(() {
@@ -93,6 +96,9 @@ class _LoginScreenState extends State<LoginScreen>{
                           spread: 1,
                           depth: 100,
                           child: TextField(
+                            onChanged: (value){
+                              _email=value;
+                            },
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
                               fontFamily: 'OpenSans',
@@ -135,6 +141,9 @@ class _LoginScreenState extends State<LoginScreen>{
                           spread: 1,
                           depth: 100,
                           child: TextField(
+                            onChanged: (value){
+                              _password=value;
+                            },
                             textAlignVertical: TextAlignVertical.center,
                            obscureText: _obscureTextLogin,
                             style: TextStyle(
@@ -167,13 +176,25 @@ class _LoginScreenState extends State<LoginScreen>{
                 ),
                 SizedBox(height: 100),
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
-                        return Dashboard();
-                      }
-                       )
-                      );
+                  onTap: ()async{
+                    try
+                    {
+                     var check_user=await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+                     FirebaseUser getuser = await FirebaseAuth.instance.currentUser();
+                     Navigator.push(context, MaterialPageRoute(
+                         builder: (context){
+
+                             return Dashboard();
+
+
+                         }
+                     )
+                     );
+                    }catch(e)
+                    {
+                      print(e);
+                    }
+
                   },
                   child: ClayContainer(
                     height:50,

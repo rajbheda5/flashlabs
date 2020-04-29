@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Report extends StatefulWidget {
@@ -59,6 +60,123 @@ class _ReportScreen extends State<Report> {
                     onChanged: (String newValue) {
                       setState(() {
                         dropdownValue = newValue;
+                        print(dropdownValue);
+
+                        if(dropdownValue =='Faculty wise Report'){
+                        Navigator.push(context, MaterialPageRoute(
+                        builder: (context){
+
+                        return Scaffold(
+                                     backgroundColor: Colors.amberAccent,
+                                           body: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                        StreamBuilder<QuerySnapshot>(
+                        stream: Firestore.instance.collection('users').snapshots(),
+                        builder: (context,value){
+                        if(!value.hasData)
+                        {
+                        CircularProgressIndicator();
+                        }
+                        List<Text> Data = [];
+                        String data;
+                        for(var snap in value.data.documents){
+                        data =snap.data.toString();
+                        Data.add(Text(data));
+                        }
+
+                        return Center(
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: Data,
+                        ),
+                        );
+                        }
+                        )
+                        ],
+                        ),
+                        );
+                        }
+                        )
+                        );
+                        }else if(dropdownValue =='Lab wise Report'){
+                        Navigator.push(context, MaterialPageRoute(
+                        builder: (context){
+
+                        return Scaffold(
+                        backgroundColor: Colors.amberAccent,
+                        body: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        StreamBuilder<QuerySnapshot>(
+                        stream: Firestore.instance.collection('Lab1').snapshots(),
+                        builder: (context,value){
+                        if(!value.hasData)
+                        {
+                        CircularProgressIndicator();
+                        }
+                        List<Text> Data = [];
+                        String data;
+                        for(var snap in value.data.documents){
+                        data =snap.data.toString();
+                        Data.add(Text(data));
+                        }
+
+                        return Center(
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: Data,
+                        ),
+                        );
+                        }
+                        )
+                        ],
+                        ),
+                        );
+                        }
+                        )
+                        );
+
+                        }
+                        else if(dropdownValue =='Instrument wise Report'){
+                        Navigator.push(context, MaterialPageRoute(
+                        builder: (context){
+
+                        return Scaffold(
+                        backgroundColor: Colors.amberAccent,
+                        body: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        StreamBuilder<QuerySnapshot>(
+                        stream: Firestore.instance.collection('Lab2').snapshots(),
+                        builder: (context,value){
+                        if(!value.hasData)
+                        {
+                        CircularProgressIndicator();
+                        }
+                        List<Text> Data = [];
+                        String data;
+                        for(var snap in value.data.documents){
+                        data =snap.data.toString();
+                        Data.add(Text(data));
+                        }
+
+                        return Center(
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: Data,
+                        ),
+                        );
+                        }
+                        )
+                        ],
+                        ),
+                        );
+                        }
+                        )
+                        );
+                        }
+
                       });
                     },
                     items: <String>[

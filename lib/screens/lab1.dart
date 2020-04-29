@@ -1,4 +1,6 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flashlabs/classes/lab1equipment.dart';
@@ -87,9 +89,10 @@ class _LabOne extends State<Lab1> {
                     ),
                     InkWell(
                       onTap: () {
-                        setState(() {
+                        setState((){
                           isClicked1 = !isClicked1;
                           button1Color = isClicked1 ? orange : black;
+                          UpdateData('CRO1',isClicked1);
                         });
                       },
                       child:
@@ -101,6 +104,7 @@ class _LabOne extends State<Lab1> {
                         setState(() {
                           isClicked2 = !isClicked2;
                           button2Color = isClicked2 ? orange : black;
+                          UpdateData('CRO2',isClicked2);
                         });
                       },
                       child:
@@ -112,6 +116,7 @@ class _LabOne extends State<Lab1> {
                         setState(() {
                           isClicked3 = !isClicked3;
                           button3Color = isClicked3 ? orange : black;
+                          UpdateData('DMM1',isClicked3);
                         });
                       },
                       child:
@@ -123,6 +128,7 @@ class _LabOne extends State<Lab1> {
                         setState(() {
                           isClicked4 = !isClicked4;
                           button4Color = isClicked4 ? orange : black;
+                          UpdateData('DMM2',isClicked4);
                         });
                       },
                       child:
@@ -134,6 +140,7 @@ class _LabOne extends State<Lab1> {
                         setState(() {
                           isClicked5 = !isClicked5;
                           button5Color = isClicked5 ? orange : black;
+                          UpdateData('TrainerKit',isClicked5);
                         });
                       },
                       child: Lab1Equipment(
@@ -142,7 +149,13 @@ class _LabOne extends State<Lab1> {
                     SizedBox(height: 70),
                     InkWell(
                       onTap: () {
-                        createAlertDialog(context).then((onValue) {});
+                        createAlertDialog(context).then((onValue)async{
+                          FirebaseUser user =await FirebaseAuth.instance.currentUser();
+                          await Firestore.instance.collection('Lab1Remarks').document('${user.email}').updateData({
+                            'user':'${user.email}',
+                            'remark':onValue,
+                          }).catchError((e){print(e);});
+                        });
                       },
                       child: ClayContainer(
                         height: 80,
@@ -181,4 +194,19 @@ class _LabOne extends State<Lab1> {
       ),
     );
   }
+}
+
+void UpdateData(String item,bool isclicked)async{
+  if(!isclicked){ await Firestore.instance.collection('Lab1').document('$item').updateData({
+    'user':'Free for Use',
+  }).catchError((e){print(e);});}
+if(isclicked){
+  FirebaseUser user =await FirebaseAuth.instance.currentUser();
+
+  await Firestore.instance.collection('Lab1').document('$item').updateData({
+    'user':'${user.email}',
+  }).catchError((e){print(e);});
+}
+
+  
 }

@@ -1,4 +1,6 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 
@@ -15,45 +17,63 @@ class _LabTwo extends State<Lab2> {
   void _incrementBurrete() {
     setState(() {
       _burrette++;
+      UpdateData('Burrette', true, _burrette);
     });
   }
 
   void _decrementBurrete() {
     setState(() {
       if (_burrette >= 1)
-        _burrette--;
+      {
+        --_burrette;
+        UpdateData('Burrette', true, _burrette);
+      }
       else
+      {
         _burrette = 0;
+        UpdateData('Burrette', false, _burrette);
+      }
+
     });
   }
 
   void _incrementflask() {
     setState(() {
       _flask++;
+      UpdateData('Flask', true, _flask);
     });
   }
 
   void _decrementflask() {
     setState(() {
-      if (_flask >= 1)
+      if (_flask >= 1){
         _flask--;
-      else
+        UpdateData('Flask', true, _flask);
+      }
+
+      else{
         _flask = 0;
+        UpdateData('Flask', false, _flask);
+      }
+
     });
   }
 
   void _incrementTestTube() {
     setState(() {
       _testTube++;
+      UpdateData('TestTubes', true, _testTube);
     });
   }
 
   void _decrementTestTube() {
     setState(() {
-      if (_testTube >= 1)
-        _testTube--;
-      else
-        _testTube = 0;
+      if (_testTube >= 1){_testTube--;
+      UpdateData('TestTubes', true, _testTube);}
+
+      else{_testTube = 0;
+      UpdateData('TestTubes', false, _testTube);}
+
     });
   }
 
@@ -290,7 +310,13 @@ class _LabTwo extends State<Lab2> {
                     SizedBox(height: 70),
                     InkWell(
                       onTap: () {
-                        createAlertDialog(context).then((onValue) {});
+                        createAlertDialog(context).then((onValue)async{
+                          FirebaseUser user =await FirebaseAuth.instance.currentUser();
+                          await Firestore.instance.collection('Lab2Remarks').document('${user.email}').updateData({
+                            'user':'${user.email}',
+                            'remark':onValue,
+                          }).catchError((e){print(e);});
+                        });
                       },
                       child: ClayContainer(
                         height: 80,
@@ -329,4 +355,22 @@ class _LabTwo extends State<Lab2> {
       ),
     );
   }
+}
+
+void UpdateData(String item,bool isclicked,int amt)async{
+  if(!isclicked){ await Firestore.instance.collection('Lab2').document('$item').updateData({
+    'user':'Free for Use',
+    'no':'0',
+  }).catchError((e){print(e);});}
+  if(isclicked){
+    FirebaseUser user =await FirebaseAuth.instance.currentUser();
+
+    await Firestore.instance.collection('Lab2').document('$item').updateData({
+      'user':'${user.email}',
+      'no':'$amt',
+
+    }).catchError((e){print(e);});
+  }
+
+
 }
