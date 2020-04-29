@@ -26,8 +26,10 @@ void Get_user_info()async
       var userdetail = await Firestore.instance.collection('users').document(
           '${getuser.email}').get();
 
-       userName = await userdetail.data['name'];
-       userInfo = await userdetail.data['deg'];
+       setState(() {
+          userName = userdetail.data['name'];
+          userInfo = userdetail.data['deg'];
+        });
     }
     catch(e)
     {
