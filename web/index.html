@@ -28,6 +28,34 @@
       });
     }
   </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAA_F2-MPAM2IewAidBZrQW1rIXmN7kQqI",
+    authDomain: "flashlab-aefe3.firebaseapp.com",
+    databaseURL: "https://flashlab-aefe3.firebaseio.com",
+    projectId: "flashlab-aefe3",
+    storageBucket: "flashlab-aefe3.appspot.com",
+    messagingSenderId: "611560359183",
+    appId: "1:611560359183:web:aac548304698083ff42a7a",
+    measurementId: "G-C0WN9HGZVW"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<script src="main.dart.js" type="application/javascript"></script>
+
 </body>
 </html>
