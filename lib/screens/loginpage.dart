@@ -1,9 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flashlabs/screens/dashboard.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -12,6 +15,7 @@ class LoginScreen extends StatefulWidget{
 
 class _LoginScreenState extends State<LoginScreen>{
   bool _obscureTextLogin = true;
+  bool isLoading = false;
   String _email,_password;
 
  void _toggleLogin() {
@@ -192,7 +196,15 @@ class _LoginScreenState extends State<LoginScreen>{
                      );
                     }catch(e)
                     {
-                      print(e);
+                      Flushbar(
+                    message: 'Please validate your credentials',
+                    duration: Duration(seconds: 2),
+                    margin: EdgeInsets.all(8),
+                    borderRadius: 8,
+                    backgroundColor: Color.fromRGBO(24, 26, 30, 1),
+                    icon: Icon(Icons.error_outline),
+                    flushbarPosition: FlushbarPosition.TOP,
+                  )..show(context);
                     }
 
                   },
