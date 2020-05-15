@@ -10,6 +10,7 @@ class Lab2 extends StatefulWidget {
 }
 
 class _LabTwo extends State<Lab2> {
+  bool isLoading = true;
   int _burrette = 0;
   int _flask = 0;
   int _testTube = 0;
@@ -17,7 +18,7 @@ class _LabTwo extends State<Lab2> {
   void _incrementBurrete() {
     setState(() {
       _burrette++;
-      UpdateData('Burrette', true, _burrette);
+      updateData('Burrette', true, _burrette);
     });
   }
 
@@ -26,12 +27,12 @@ class _LabTwo extends State<Lab2> {
       if (_burrette >= 1)
       {
         --_burrette;
-        UpdateData('Burrette', true, _burrette);
+        updateData('Burrette', true, _burrette);
       }
       else
       {
         _burrette = 0;
-        UpdateData('Burrette', false, _burrette);
+        updateData('Burrette', false, _burrette);
       }
 
     });
@@ -40,7 +41,7 @@ class _LabTwo extends State<Lab2> {
   void _incrementflask() {
     setState(() {
       _flask++;
-      UpdateData('Flask', true, _flask);
+      updateData('Flask', true, _flask);
     });
   }
 
@@ -48,12 +49,12 @@ class _LabTwo extends State<Lab2> {
     setState(() {
       if (_flask >= 1){
         _flask--;
-        UpdateData('Flask', true, _flask);
+        updateData('Flask', true, _flask);
       }
 
       else{
         _flask = 0;
-        UpdateData('Flask', false, _flask);
+        updateData('Flask', false, _flask);
       }
 
     });
@@ -62,18 +63,17 @@ class _LabTwo extends State<Lab2> {
   void _incrementTestTube() {
     setState(() {
       _testTube++;
-      UpdateData('TestTubes', true, _testTube);
+      updateData('TestTubes', true, _testTube);
     });
   }
 
   void _decrementTestTube() {
     setState(() {
       if (_testTube >= 1){_testTube--;
-      UpdateData('TestTubes', true, _testTube);}
+      updateData('TestTubes', true, _testTube);}
 
       else{_testTube = 0;
-      UpdateData('TestTubes', false, _testTube);}
-
+      updateData('TestTubes', false, _testTube);}
     });
   }
 
@@ -107,6 +107,67 @@ class _LabTwo extends State<Lab2> {
             ],
           );
         });
+  }
+  void updateData(String item,bool isclicked,int amt)async{
+  if(!isclicked){ await Firestore.instance.collection('Lab2').document('$item').updateData({
+    'user':'Free for Use',
+    'no':'0',
+  }).catchError((e){print(e);});}
+  if(isclicked){
+    FirebaseUser user =await FirebaseAuth.instance.currentUser();
+
+    await Firestore.instance.collection('Lab2').document('$item').updateData({
+      'user':'${user.email}',
+      'no':'$amt',
+
+    }).catchError((e){print(e);});
+  }
+}
+
+void getdata() async{
+  try{
+    var bdata = await Firestore.instance.collection('Lab2').document('Burrette').get();
+    setState(() {
+      _burrette = bdata.data['no'];
+    });
+    var fdata = await Firestore.instance.collection('Lab2').document('Flask').get();
+    setState(() {
+      _flask = fdata.data['no'];
+    });
+    var tdata = await Firestore.instance.collection('Lab2').document('TestTubes').get();
+    setState(() {
+      _testTube = tdata.data['no'];
+    });
+    setState(() {
+      isLoading = false;
+    });
+  }
+  catch(e){
+    print(e);
+    Flushbar(
+        message: 'Please check your connection!',
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(8),
+        borderRadius: 8,
+        backgroundColor: Color.fromRGBO(242, 62, 16, 1),
+        icon: Icon(Icons.error_outline),
+        flushbarPosition: FlushbarPosition.TOP,
+            )..show(context);
+  }
+}
+  
+@override
+  void initState(){
+    try{
+
+      getdata();
+
+    }catch(e)
+    {
+      print(e);
+}
+  super.initState();
+
   }
 
   @override
@@ -357,20 +418,3 @@ class _LabTwo extends State<Lab2> {
   }
 }
 
-void UpdateData(String item,bool isclicked,int amt)async{
-  if(!isclicked){ await Firestore.instance.collection('Lab2').document('$item').updateData({
-    'user':'Free for Use',
-    'no':'0',
-  }).catchError((e){print(e);});}
-  if(isclicked){
-    FirebaseUser user =await FirebaseAuth.instance.currentUser();
-
-    await Firestore.instance.collection('Lab2').document('$item').updateData({
-      'user':'${user.email}',
-      'no':'$amt',
-
-    }).catchError((e){print(e);});
-  }
-
-
-}

@@ -1,7 +1,4 @@
-//import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:flashlabs/screens/loading.dart';
 import 'package:flashlabs/screens/reportscreen.dart';
 import 'package:flashlabs/screens/update.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +66,7 @@ void getuserdata()async
           color: Color.fromRGBO(24, 26, 30, 1),
           progressIndicator: SpinKitWave(
             color: Color.fromRGBO(242, 62, 16, 1),
-          size: 50,
+            size: 50,
           ),
           child: Stack(
             children: <Widget>[
