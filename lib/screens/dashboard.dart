@@ -15,7 +15,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
-  String userName ='null' ,userInfo='null' ;
+  String userName ='test' ,userInfo='test' ;
   bool isLoading = true;
   //Here, for UI, I've initialised the strings but the value of string will actually the one fetched from firestore
 

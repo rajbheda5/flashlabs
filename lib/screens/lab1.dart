@@ -13,6 +13,7 @@ class Lab1 extends StatefulWidget {
 }
 
 class _LabOne extends State<Lab1> {
+  String _remark = 'null';
   bool isLoading = true;
   bool isClicked1 = false;
   bool isClicked2 = false;
@@ -111,14 +112,22 @@ void getdata()async{
           return AlertDialog(
             title: Text('Remarks'),
             content: TextField(
+              onChanged: (value){
+                _remark = value;
+              },
               controller: customController,
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
                 child: Text('Submit'),
-                onPressed: () {                
+                onPressed: ()async {                
                   Navigator.of(context).pop(customController.text.toString());
+                  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  Firestore.instance.collection('Lab1Remarks').add({
+                    'remark' : _remark,
+                    'user' :'${user.email}',
+                  });
                   Flushbar(
                     message: 'Submitted Successfully!',
                     duration: Duration(seconds: 1),

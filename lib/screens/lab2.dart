@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Lab2 extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class Lab2 extends StatefulWidget {
 }
 
 class _LabTwo extends State<Lab2> {
+  String _remark = 'null';
   bool isLoading = true;
   int _burrette = 0;
   int _flask = 0;
@@ -86,14 +89,22 @@ class _LabTwo extends State<Lab2> {
           return AlertDialog(
             title: Text('Remarks'),
             content: TextField(
+              onChanged: (value){
+                _remark = value;
+              },
               controller: customController,
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
                 child: Text('Submit'),
-                onPressed: () {
+                onPressed: ()async {
                   Navigator.of(context).pop(customController.text.toString());
+                  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  Firestore.instance.collection('Lab2Remarks').add({
+                    'remark' : _remark,
+                    'user' :'${user.email}',
+                  });
                   Flushbar(
                     message: 'Submitted Successfully!',
                     duration: Duration(seconds: 1),
@@ -111,14 +122,13 @@ class _LabTwo extends State<Lab2> {
   void updateData(String item,bool isclicked,int amt)async{
   if(!isclicked){ await Firestore.instance.collection('Lab2').document('$item').updateData({
     'user':'Free for Use',
-    'no':'0',
+    'no':0,
   }).catchError((e){print(e);});}
   if(isclicked){
     FirebaseUser user =await FirebaseAuth.instance.currentUser();
-
     await Firestore.instance.collection('Lab2').document('$item').updateData({
       'user':'${user.email}',
-      'no':'$amt',
+      'no': amt,
 
     }).catchError((e){print(e);});
   }
@@ -145,7 +155,7 @@ void getdata() async{
   catch(e){
     print(e);
     Flushbar(
-        message: 'Please check your connection!',
+        message: 'Cannot establish connection!',
         duration: Duration(seconds: 2),
         margin: EdgeInsets.all(8),
         borderRadius: 8,
@@ -183,236 +193,245 @@ void getdata() async{
           ),
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(24, 26, 30, 1),
+      body: ModalProgressHUD(
+        inAsyncCall: isLoading,
+        opacity: 1,
+        color: Color.fromRGBO(24, 26, 30, 1),
+        progressIndicator: SpinKitWave(
+            color: Color.fromRGBO(242, 62, 16, 1),
+            size: 50,
           ),
-          Container(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                    ),
-                    Text('Burrette',
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Color.fromRGBO(24, 26, 30, 1),
+            ),
+            Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                      Text('Burrette',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(
+                        'Quantity: $_burrette ',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text(
-                      'Quantity: $_burrette',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: _incrementBurrete,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(24, 26, 30, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                          onTap: _decrementBurrete,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(242, 62, 16, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 50),
-                    Text('Flask',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text(
-                      'Quantity: $_flask',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
+                      SizedBox(
+                        height: 15,
                       ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: _incrementflask,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(24, 26, 30, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                          onTap: _decrementflask,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(242, 62, 16, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 50),
-                    Text('Test Tubes',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Text(
-                      'Quantity: $_testTube',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: _incrementTestTube,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(24, 26, 30, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                          onTap: _decrementTestTube,
-                          child: ClayContainer(
-                            height: 50,
-                            width: 100,
-                            color: Color.fromRGBO(242, 62, 16, 1),
-                            borderRadius: 25,
-                            child: Center(
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 70),
-                    InkWell(
-                      onTap: () {
-                        createAlertDialog(context).then((onValue)async{
-                          FirebaseUser user =await FirebaseAuth.instance.currentUser();
-                          await Firestore.instance.collection('Lab2Remarks').document('${user.email}').updateData({
-                            'user':'${user.email}',
-                            'remark':onValue,
-                          }).catchError((e){print(e);});
-                        });
-                      },
-                      child: ClayContainer(
-                        height: 80,
-                        width: 200,
-                        borderRadius: 18,
-                        color: Color.fromRGBO(242, 62, 16, 1),
-                        spread: 3,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.feedback,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                              SizedBox(width: 15),
-                              Text(
-                                'Add Remarks',
-                                style: TextStyle(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: _incrementBurrete,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(24, 26, 30, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
                                   color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          InkWell(
+                            onTap: _decrementBurrete,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(242, 62, 16, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 50),
+                      Text('Flask',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(
+                        'Quantity: $_flask',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: _incrementflask,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(24, 26, 30, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          InkWell(
+                            onTap: _decrementflask,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(242, 62, 16, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 50),
+                      Text('Test Tubes',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(
+                        'Quantity: $_testTube',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: _incrementTestTube,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(24, 26, 30, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          InkWell(
+                            onTap: _decrementTestTube,
+                            child: ClayContainer(
+                              height: 50,
+                              width: 100,
+                              color: Color.fromRGBO(242, 62, 16, 1),
+                              borderRadius: 25,
+                              child: Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 70),
+                      InkWell(
+                        onTap: () {
+                          createAlertDialog(context).then((onValue)async{
+                            FirebaseUser user =await FirebaseAuth.instance.currentUser();
+                            await Firestore.instance.collection('Lab2Remarks').document('${user.email}').updateData({
+                              'user':'${user.email}',
+                              'remark':onValue,
+                            }).catchError((e){print(e);});
+                          });
+                        },
+                        child: ClayContainer(
+                          height: 80,
+                          width: 200,
+                          borderRadius: 18,
+                          color: Color.fromRGBO(242, 62, 16, 1),
+                          spread: 3,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.feedback,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
+                                SizedBox(width: 15),
+                                Text(
+                                  'Add Remarks',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 70),
-                  ],
-                ),
-              ))
-        ],
+                      SizedBox(height: 70),
+                    ],
+                  ),
+                ))
+          ],
+        ),
       ),
     );
   }
