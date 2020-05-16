@@ -13,6 +13,10 @@ class Lab3 extends StatefulWidget{
 }
 
 class _LabThree extends State<Lab3>{
+  int _utilisationTime;
+  int minutes;
+  Timestamp start;
+  Timestamp end;
   String _remark = 'null';
   bool isLoading = true;
   bool isClicked1 = false;
@@ -72,13 +76,31 @@ class _LabThree extends State<Lab3>{
     await Firestore.instance.collection('Lab3').document('$item').updateData({
     'user':'Free for Use',
     'isUtilised': isClicked,
-  }).catchError((e){print(e);});}
+    'endUtilisation': DateTime.now(),
+  }).catchError((e){print(e);});
+  var timedef = await Firestore.instance.collection('Lab3').document('$item').get();
+    start = timedef.data['startUtilisation'];
+    print(start);
+    DateTime startd = start.toDate();
+    end = timedef.data['endUtilisation'];
+    DateTime endd = end.toDate();
+    print(end);
+    minutes = timedef.data['minutes'];
+    _utilisationTime = endd.difference(startd).inMinutes;
+    print(_utilisationTime);
+    minutes += _utilisationTime;
+    
+    await Firestore.instance.collection('Lab3').document('$item').updateData({
+    'minutes': minutes,
+  }).catchError((e){print(e);});
+  }
   if(isClicked){
     FirebaseUser user =await FirebaseAuth.instance.currentUser();
 
     await Firestore.instance.collection('Lab3').document('$item').updateData({
       'user':'${user.email}',
       'isUtilised': isClicked,
+      'startUtilisation': DateTime.now(),
     }).catchError((e){print(e);});
   }
 }

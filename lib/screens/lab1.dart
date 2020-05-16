@@ -13,6 +13,10 @@ class Lab1 extends StatefulWidget {
 }
 
 class _LabOne extends State<Lab1> {
+  int _utilisationTime;
+  int _minutes;
+  Timestamp start;
+  Timestamp end;
   String _remark = 'null';
   bool isLoading = true;
   bool isClicked1 = false;
@@ -29,16 +33,35 @@ class _LabOne extends State<Lab1> {
   Color button5Color = Color.fromRGBO(24, 26, 30, 1);
 
   void updateData(String item,bool isClicked)async{
-  if(!isClicked){ await Firestore.instance.collection('Lab1').document('$item').updateData({
+  if(!isClicked){ 
+    await Firestore.instance.collection('Lab1').document('$item').updateData({
     'user':'Free for Use',
     'isUtilised': isClicked,
-  }).catchError((e){print(e);});}
+    'endUtilisation': DateTime.now(),
+  }).catchError((e){print(e);});
+   var timedef = await Firestore.instance.collection('Lab1').document('$item').get();
+    start = timedef.data['startUtilisation'];
+    print(start);
+    DateTime startd = start.toDate();
+    end = timedef.data['endUtilisation'];
+    DateTime endd = end.toDate();
+    print(end);
+    _minutes = timedef.data['minutes'];
+    _utilisationTime = endd.difference(startd).inMinutes;
+    print(_utilisationTime);
+    _minutes += _utilisationTime;
+    
+    await Firestore.instance.collection('Lab1').document('$item').updateData({
+    'minutes': _minutes,
+  }).catchError((e){print(e);});
+  }
 if(isClicked){
   FirebaseUser user =await FirebaseAuth.instance.currentUser();
 
   await Firestore.instance.collection('Lab1').document('$item').updateData({
     'user':'${user.email}',
     'isUtilised': isClicked,
+    'startUtilisation': DateTime.now(),
   }).catchError((e){print(e);});
 }
 }
