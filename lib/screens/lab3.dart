@@ -148,6 +148,7 @@ class _LabThree extends State<Lab3> {
           .get();
       setState(() {
         isOpen = open.data['isOpen'];
+        switchLoad = false;
       });
       setState(() {
         isLoading = false;
@@ -266,7 +267,15 @@ class _LabThree extends State<Lab3> {
           ),
         ),
         actions: <Widget>[
-          Switch(
+          switchLoad
+              ? SizedBox(
+                height: 30,
+                width: 30,
+                child: Padding(
+                    padding: EdgeInsets.only(top: 20, right: 15, bottom: 20),
+                    child: CircularProgressIndicator())
+              )
+              : Switch(
             value: isOpen,
             onChanged: (value) {
               setState(() {

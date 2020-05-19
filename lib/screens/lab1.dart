@@ -27,6 +27,7 @@ class _LabOne extends State<Lab1> {
   bool isClicked3 = false;
   bool isClicked4 = false;
   bool isClicked5 = false;
+  bool switchLoad = true;
   final Color black = Color.fromRGBO(24, 26, 30, 1);
   final Color orange = Color.fromRGBO(242, 62, 16, 1);
   Color button1Color = Color.fromRGBO(24, 26, 30, 1);
@@ -116,6 +117,7 @@ class _LabOne extends State<Lab1> {
           .get();
       setState(() {
         isOpen = open.data['isOpen'];
+        switchLoad = false;
       });
       setState(() {
         isLoading = false;
@@ -184,7 +186,7 @@ class _LabOne extends State<Lab1> {
           .document('${user.email}')
           .updateData({
         'lab1util': (diff + userminutes),
-        'minutes': (usermin.data['minutes']+diff),
+        'minutes': (usermin.data['minutes'] + diff),
       });
       print((diff + userminutes));
     }
@@ -274,16 +276,24 @@ class _LabOne extends State<Lab1> {
           ),
         ),
         actions: <Widget>[
-          Switch(
-            value: isOpen,
-            onChanged: (value) {
-              setState(() {
-                isOpen = !isOpen;
-                openUpdate(isOpen);
-              });
-            },
-            activeColor: Colors.orange,
-          ),
+          switchLoad
+              ? SizedBox(
+                height: 30,
+                width: 30,
+                child: Padding(
+                    padding: EdgeInsets.only(top: 20, right: 15, bottom: 20),
+                    child: CircularProgressIndicator())
+              )
+              : Switch(
+                  value: isOpen,
+                  onChanged: (value) {
+                    setState(() {
+                      isOpen = !isOpen;
+                      openUpdate(isOpen);
+                    });
+                  },
+                  activeColor: Colors.orange,
+                ),
         ],
       ),
       body: !isOpen
