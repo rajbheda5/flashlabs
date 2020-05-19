@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-int lab1u1;
-int lab2u1;
-int lab3u1;
-int lab1u2;
-int lab2u2;
-int lab3u2;
+int lab1u1=0;
+int lab2u1=0;
+int lab3u1=0;
+int lab1u2=0;
+int lab2u2=0;
+int lab3u2=0;
 
 class FWreport extends StatefulWidget {
   @override
@@ -60,32 +60,32 @@ class _FWreportState extends State<FWreport> {
     super.initState();
   }
 
-  Future<Widget> createAlertDialog(BuildContext context){
-    return showDialog(
-      context: context,
-      builder: (context){
-        return AlertDialog(
-          title: Text('Lab vs Utilisation graph'),
-        backgroundColor: Color(0xff46426c),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-          content: Expanded(
-            child: LineChartSample1(),
-          ),
-          actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                child: Text('Close'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-        );
-      }
-    );
-  }
+  // Future<Widget> createAlertDialog(BuildContext context){
+  //   return showDialog(
+  //     context: context,
+  //     builder: (context){
+  //       return AlertDialog(
+  //         title: Text('Lab vs Utilisation graph'),
+  //       backgroundColor: Color(0xff46426c),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.all(Radius.circular(20)),
+  //       ),
+  //         content: Expanded(
+  //           child: LineChartSample1(),
+  //         ),
+  //         actions: <Widget>[
+  //             MaterialButton(
+  //               elevation: 5.0,
+  //               child: Text('Close'),
+  //               onPressed: () async {
+  //                 Navigator.pop(context);
+  //               },
+  //             )
+  //           ],
+  //       );
+  //     }
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -216,38 +216,79 @@ class _FWreportState extends State<FWreport> {
                         ]),
                   ),
                   SizedBox(height: 50),
-                  InkWell(
-                    onTap: (){
-                      createAlertDialog(context);
-                    },
-                    child: ClayContainer(
-                      height: 80,
-                      width: 200,
-                      borderRadius: 18,
-                      color: Color.fromRGBO(242, 62, 16, 1),
-                      spread: 3,
-                      child: Center(
-                        child: Row(
+                  // InkWell(
+                  //   onTap: (){
+                  //     createAlertDialog(context);
+                  //   },
+                  //   child: ClayContainer(
+                  //     height: 80,
+                  //     width: 200,
+                  //     borderRadius: 18,
+                  //     color: Color.fromRGBO(242, 62, 16, 1),
+                  //     spread: 3,
+                  //     child: Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           Icon(
+                  //             Icons.graphic_eq,
+                  //             color: Colors.white,
+                  //             size: 35,
+                  //           ),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             'Generate Graph',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 18,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  LineChartSample1(),
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.graphic_eq,
-                              color: Colors.white,
-                              size: 35,
+                          children: [
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Color(0xff4af699),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Generate Graph',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
+                          SizedBox(width: 15),
+                          Text(' - User 1',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),)
+                        ],),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Color(0xffaa4cfc),
+                            ),
+                          ),
+                          SizedBox(width: 15),
+                          Text(' - User 2',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),)
+                        ],)
+                      ],
+                    )
                   ),
                   SizedBox(height: 50),
                 ],
@@ -275,8 +316,8 @@ class LineChartSample1State extends State<LineChartSample1> {
           borderRadius: const BorderRadius.all(Radius.circular(18)),
           gradient: LinearGradient(
             colors: const [
-              Color(0xff2c274c),
-              Color(0xff46426c),
+              Color.fromRGBO(24, 26, 30, 1),
+              Color.fromRGBO(25, 26, 32, 1)
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,

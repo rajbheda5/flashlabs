@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-int pc1, pc2, pc3, pc4;
-int cro1, cro2, dmm1, dmm2, tk;
+int pc1=0, pc2=0, pc3=0, pc4=0;
+int cro1=0, cro2=0, dmm1=0, dmm2=0, tk=0;
 int burrette, flask, tt;
 
 class IWreport extends StatefulWidget {
@@ -96,32 +96,32 @@ class _IWreportState extends State<IWreport> {
     super.initState();
   }
 
-  Future<Widget> createAlertDialog(BuildContext context){
-    return showDialog(
-      context: context,
-      builder: (context){
-        return AlertDialog(
-          title: Text('Lab vs Utilisation graph'),
-        backgroundColor: Color.fromRGBO(30, 33, 38, 1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-          content: Expanded(
-            child: BarChartSample3(),
-          ),
-          actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                child: Text('Close'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-        );
-      }
-    );
-  }
+  // Future<Widget> createAlertDialog(BuildContext context){
+  //   return showDialog(
+  //     context: context,
+  //     builder: (context){
+  //       return AlertDialog(
+  //         title: Text('Lab vs Utilisation graph'),
+  //       backgroundColor: Color.fromRGBO(30, 33, 38, 1),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.all(Radius.circular(20)),
+  //       ),
+  //         content: Expanded(
+  //           child: BarChartSample3(),
+  //         ),
+  //         actions: <Widget>[
+  //             MaterialButton(
+  //               elevation: 5.0,
+  //               child: Text('Close'),
+  //               onPressed: () async {
+  //                 Navigator.pop(context);
+  //               },
+  //             )
+  //           ],
+  //       );
+  //     }
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -343,39 +343,40 @@ class _IWreportState extends State<IWreport> {
                     height: 50,
                     width: double.infinity,
                   ),
-                  InkWell(
-                    onTap: (){
-                      createAlertDialog(context);
-                    },
-                    child: ClayContainer(
-                      height: 80,
-                      width: 200,
-                      borderRadius: 18,
-                      color: Color.fromRGBO(242, 62, 16, 1),
-                      spread: 3,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.graphic_eq,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Generate Graph',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: (){
+                  //     createAlertDialog(context);
+                  //   },
+                  //   child: ClayContainer(
+                  //     height: 80,
+                  //     width: 200,
+                  //     borderRadius: 18,
+                  //     color: Color.fromRGBO(242, 62, 16, 1),
+                  //     spread: 3,
+                  //     child: Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           Icon(
+                  //             Icons.graphic_eq,
+                  //             color: Colors.white,
+                  //             size: 35,
+                  //           ),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             'Generate Graph',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 18,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  BarChartSample3(),
                   SizedBox(
                     height: 50,
                   )

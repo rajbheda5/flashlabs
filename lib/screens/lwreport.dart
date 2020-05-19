@@ -25,7 +25,6 @@ class _LWreportState extends State<LWreport> {
   bool isOpen1;
   bool isOpen2;
   bool isOpen3;
-  bool isLoading = true;
 
   void getdata() async {
     try {
@@ -80,9 +79,6 @@ class _LWreportState extends State<LWreport> {
           end3 = 'Active Now';
         }
       });
-      setState(() {
-        isLoading = false;
-      });
     } catch (e) {
       print(e);
     }
@@ -98,31 +94,29 @@ class _LWreportState extends State<LWreport> {
     super.initState();
   }
 
-  Future<Widget> createAlertDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Lab vs Utilisation graph'),
-            backgroundColor: Color.fromRGBO(30, 33, 38, 1),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            content: Expanded(
-              child: LineChart1(),
-            ),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                child: Text('Close'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          );
-        });
-  }
+  // Future<Widget> createAlertDialog(BuildContext context) {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('Lab vs Utilisation graph'),
+  //           backgroundColor: Color.fromRGBO(30, 33, 38, 1),
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.all(Radius.circular(20)),
+  //           ),
+  //           content:LineChart1(),
+  //           actions: <Widget>[
+  //             MaterialButton(
+  //               elevation: 5.0,
+  //               child: Text('Close'),
+  //               onPressed: () async {
+  //                 Navigator.pop(context);
+  //               },
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -314,40 +308,44 @@ class _LWreportState extends State<LWreport> {
                     height: 50,
                     width: double.infinity,
                   ),
-                  InkWell(
-                    onTap: () {
-                      createAlertDialog(context);
-                    },
-                    child: ClayContainer(
-                      height: 80,
-                      width: 200,
-                      borderRadius: 18,
-                      color: Color.fromRGBO(242, 62, 16, 1),
-                      spread: 3,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.graphic_eq,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Generate Graph',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     setState(() {
+                  //       showGraph = true;
+                  //     });
+                  //   },
+                  //   child: ClayContainer(
+                  //     height: 80,
+                  //     width: 200,
+                  //     borderRadius: 18,
+                  //     color: Color.fromRGBO(242, 62, 16, 1),
+                  //     spread: 3,
+                  //     child: Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           Icon(
+                  //             Icons.graphic_eq,
+                  //             color: Colors.white,
+                  //             size: 35,
+                  //           ),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             'Generate Graph',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 18,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  LineChart1(),
                   SizedBox(height: 50),
+                  
                 ],
               ),
             ),
